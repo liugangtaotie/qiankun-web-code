@@ -1,0 +1,1 @@
+<template>webpack-app about</template>

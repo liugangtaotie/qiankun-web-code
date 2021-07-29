@@ -1,0 +1,37 @@
+{
+  "name": "qiankun-example",
+  "version": "0.0.1",
+  "description": "qiankun demo",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {
+    "npm-run-all": "^4.1.5"
+  },
+  "scripts": {
+    "install": "npm-run-all --serial install:*",
+    "install:main-vite-app-ts": "cd main-vite-app-ts && npm i",
+    "install:map-app": "cd map-app && npm i",
+    "install:react-app": "cd react-app && npm i",
+    "install:webpack-app": "cd webpack-app && npm i",
+    "install:webpack-app-ts": "cd webpack-app-ts && npm i",
+    "start": "npm-run-all --parallel start:*",
+    "start:map-app": "cd map-app && npm start",
+    "start:react-app": "cd react-app && npm start",
+    "start:webpack-app": "cd webpack-app && npm start",
+    "start:webpack-app-ts": "cd webpack-app-ts && npm start",
+    "start:main-vite-app-ts": "cd main-vite-app-ts && npm start",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com:liugangtaotie/qiankun-mobile-code.git"
+  },
+  "keywords": [
+    "qiankun",
+    "qiankun-example",
+    "demo"
+  ],
+  "author": "wuxiang",
+  "license": "MIT",
+  "__npminstall_done": false
+}
