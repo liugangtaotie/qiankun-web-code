@@ -1,43 +1,38 @@
-import { ElMessage } from "element-plus"
+import { ElMessage } from "element-plus";
 
 // 消息
 const Message = (message: string): any => {
   return ElMessage({
     showClose: true,
-    message
-  })
-}
+    message,
+  });
+};
 
 // 成功
 const successMessage = (message: string): any => {
   return ElMessage({
     showClose: true,
     message,
-    type: "success"
-  })
-}
+    type: "success",
+  });
+};
 
 // 警告
 const warnMessage = (message: string): any => {
   return ElMessage({
     showClose: true,
     message,
-    type: "warning"
-  })
-}
+    type: "warning",
+  });
+};
 
 // 失败
 const errorMessage = (message: string): any => {
   return ElMessage({
     showClose: true,
     message,
-    type: "error"
-  })
-}
+    type: "error",
+  });
+};
 
-export {
-  Message,
-  successMessage,
-  warnMessage,
-  errorMessage
-}
+export { Message, successMessage, warnMessage, errorMessage };

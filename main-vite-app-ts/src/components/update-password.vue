@@ -34,23 +34,23 @@
   </el-dialog>
 </template>
 <script lang="ts">
-import { defineComponent, reactive, toRefs, ref } from "vue"
-import { changedSelf, logout } from "../services"
-import { successMessage } from "../utils/message"
-import { useRouter } from "vue-router"
-import md5 from "js-md5"
+import { defineComponent, reactive, toRefs, ref } from "vue";
+import { changedSelf, logout } from "../services";
+import { successMessage } from "../utils/message";
+import { useRouter } from "vue-router";
+import md5 from "js-md5";
 export default defineComponent({
   name: "UpdatePassword",
   props: {
     updateDialogVisible: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   emits: ["cancel"],
   setup(props, context) {
-    const router = useRouter()
-    const updateForm = ref(null)
+    const router = useRouter();
+    const updateForm = ref(null);
     const state = reactive({
       visible: props.updateDialogVisible,
       closeOnClickModal: false,
@@ -58,10 +58,10 @@ export default defineComponent({
       form: {
         oldPassword: "",
         newPassword: "",
-        checkPwd: ""
+        checkPwd: "",
       },
-      rules: []
-    })
+      rules: [],
+    });
 
     // const checkPsdVal = (_rules, value, callback) => {
     //   const rule = /^(?![^a-zA-Z]+$)(?!\D+$).{8,16}/
@@ -73,94 +73,94 @@ export default defineComponent({
     // }
     const checkPsdVal = (_rules, value, callback) => {
       if (value.length < 6) {
-        callback(new Error("密码长度不够，请重新输入"))
+        callback(new Error("密码长度不够，请重新输入"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
 
     const checkPassword = (_rules, value, callback) => {
       if (value !== state.form.newPassword) {
-        callback(new Error("两次密码输入不一致"))
+        callback(new Error("两次密码输入不一致"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
     const rules: any = {
       oldPassword: [
         {
           required: true,
           message: "请输入原密码",
-          trigger: ["blur"]
-        }
+          trigger: ["blur"],
+        },
       ],
       newPassword: [
         {
           required: true,
           message: "请输入新密码",
-          trigger: ["blur"]
+          trigger: ["blur"],
         },
         {
           validator: checkPsdVal,
-          trigger: ["blur"]
-        }
+          trigger: ["blur"],
+        },
       ],
       checkPwd: [
         {
           required: true,
           message: "请再次输入新密码",
-          trigger: ["blur"]
+          trigger: ["blur"],
         },
         {
           validator: checkPsdVal,
-          trigger: ["blur"]
+          trigger: ["blur"],
         },
         {
           validator: checkPassword,
-          trigger: ["blur"]
-        }
-      ]
-    }
+          trigger: ["blur"],
+        },
+      ],
+    };
 
     const close = () => {
-      context.emit("cancel")
+      context.emit("cancel");
       // updateForm.value.reset
-    }
+    };
     const changedSelfApi = () => {
       changedSelf({
-        password: md5(state.form.newPassword)
+        password: md5(state.form.newPassword),
       }).then((res: any) => {
         if (res.code === 200) {
-          successMessage("修改成功,请重新登录")
-          close()
-          loginOutApi()
+          successMessage("修改成功,请重新登录");
+          close();
+          loginOutApi();
         }
-      })
-    }
+      });
+    };
     const loginOutApi = () => {
       logout().then((res: any) => {
-        console.log("登出成功", res)
-        localStorage.clear()
-        router.push("/login")
-      })
-    }
+        console.log("登出成功", res);
+        localStorage.clear();
+        router.push("/login");
+      });
+    };
     const submitPassword = () => {
       updateForm.value.validate(async (valid) => {
         if (valid) {
-          changedSelfApi()
+          changedSelfApi();
         }
-      })
-    }
+      });
+    };
 
     return {
       ...toRefs(state),
       close,
       submitPassword,
       rules,
-      updateForm
-    }
-  }
-})
+      updateForm,
+    };
+  },
+});
 </script>
 <style lang="scss" scoped>
 .form-row {

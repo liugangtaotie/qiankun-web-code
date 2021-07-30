@@ -1,17 +1,10 @@
 <template>
   <div class="login-page">
     <main class="content-wrapper">
-
       <div class="right" v-if="show">
         <h3 class="project-name">{{ projectName }}</h3>
         <h5 class="project-title">重置用户密码</h5>
-        <el-form
-          :model="loginForm"
-          :rules="rules"
-          ref="form"
-          size="large"
-          @submit.native.prevent
-        >
+        <el-form :model="loginForm" :rules="rules" ref="form" size="large" @submit.native.prevent>
           <el-form-item prop="account">
             <el-input
               type="text"
@@ -52,99 +45,93 @@
           </el-button>
         </el-form>
       </div>
-      <div class="no-show" v-if="!show" style="margin-top: 150px;">
-        密码重置成功，请重新登录。
-      </div>
+      <div class="no-show" v-if="!show" style="margin-top: 150px">密码重置成功，请重新登录。</div>
     </main>
   </div>
 </template>
 
 <script>
-import { changedForAccount }  from '../../services/index'  
-import md5 from 'js-md5'
-import { useRoute }  from 'vue-router'
-import { defineComponent,reactive, toRefs, ref, onMounted } from 'vue'
+import { changedForAccount } from "../../services/index";
+import md5 from "js-md5";
+import { useRoute } from "vue-router";
+import { defineComponent, reactive, toRefs, ref, onMounted } from "vue";
 export default defineComponent({
-  name:'InitPass',
-  components: {
-     
-  }, 
+  name: "InitPass",
+  components: {},
   setup() {
-    const route = useRoute()
-    let form = ref(null)
+    const route = useRoute();
+    let form = ref(null);
     const validatePass = (_rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'))
+      if (value === "") {
+        callback(new Error("请输入密码"));
       } else {
-        if (state.loginForm.account !== '') {
-          form.value.validateField('account')
+        if (state.loginForm.account !== "") {
+          form.value.validateField("account");
         }
-        callback()
+        callback();
       }
-    }
+    };
 
     const validateAccount = (_rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入用户名'))
+      if (value === "") {
+        callback(new Error("请输入用户名"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
 
     const validatorVerCode = (_rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入验证码'))
+      if (value === "") {
+        callback(new Error("请输入验证码"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
 
     const state = reactive({
-      projectName: '杨陵区数字乡村综合服务平台',
-      loginImage: 'images/login/systhetic.jpg',
+      projectName: "杨陵区数字乡村综合服务平台",
+      loginImage: "images/login/systhetic.jpg",
       loading: false,
       show: true,
       loginForm: {
-        account: '',
-        password: '',
-        captchaValue: '',
+        account: "",
+        password: "",
+        captchaValue: "",
       },
       rules: {
-        pass: [{ validator: validatePass, trigger: ['blur', 'change'] }],
-        account: [{ validator: validateAccount, trigger: ['blur', 'change'] }],
-        verifCode: [
-          { validator: validatorVerCode, trigger: ['blur', 'change'] },
-        ],
+        pass: [{ validator: validatePass, trigger: ["blur", "change"] }],
+        account: [{ validator: validateAccount, trigger: ["blur", "change"] }],
+        verifCode: [{ validator: validatorVerCode, trigger: ["blur", "change"] }],
       },
-    })
+    });
 
     onMounted(() => {
-      state.loginForm.account = route.query.user
-      state.loginForm.captchaValue = route.query.code
-    })
+      state.loginForm.account = route.query.user;
+      state.loginForm.captchaValue = route.query.code;
+    });
 
     const submitForm = () => {
-      form.value.validate(valid => {
+      form.value.validate((valid) => {
         if (valid) {
-          initPass()
+          initPass();
         }
-      })
-    }
+      });
+    };
 
     // 验证登录
-    const initPass = async() => {
-      state.loading = true
+    const initPass = async () => {
+      state.loading = true;
       const res = await changedForAccount({
         account: state.loginForm.account,
         codeVal: state.loginForm.captchaValue,
         password: md5(state.loginForm.password).toLocaleLowerCase(),
-      })
-      
-      state.loading = false
+      });
+
+      state.loading = false;
       if (res?.code === 200) {
-        state.show = false
+        state.show = false;
       }
-    }
+    };
 
     return {
       ...toRefs(state),
@@ -153,10 +140,10 @@ export default defineComponent({
       validatorVerCode,
       validatePass,
       validateAccount,
-      form
-    }
-  }
-})
+      form,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -184,7 +171,7 @@ export default defineComponent({
   font-size: 27px;
   font-weight: 600;
   color: #099e45;
-  margin-top:40px;
+  margin-top: 40px;
   margin-bottom: 90px;
 }
 
@@ -218,7 +205,7 @@ export default defineComponent({
 
   .right {
     flex: 1;
-    margin-top:90px;
+    margin-top: 90px;
     padding: 7% 7% 0;
   }
 }

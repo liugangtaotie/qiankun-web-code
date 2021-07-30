@@ -4,32 +4,32 @@
   <layout v-show="showLayout" />
 </template>
 <script lang="ts">
-import { defineComponent, watch, defineAsyncComponent, ref } from "vue"
-import { useRoute } from "vue-router"
+import { defineComponent, watch, defineAsyncComponent, ref } from "vue";
+import { useRoute } from "vue-router";
 
 export default defineComponent({
   name: "App",
   components: {
-    Layout: defineAsyncComponent(() => import("./layout/index.vue"))
+    Layout: defineAsyncComponent(() => import("./layout/index.vue")),
   },
   setup() {
-    const route = useRoute()
-    const showLayout = ref(false)
+    const route = useRoute();
+    const showLayout = ref(false);
 
     // 监测路由判断是主应用路由还是子应用路由
     watch(
       () => route.path,
       () => {
         if (["/home", "/login", "/", "/init-password"].includes(route.path)) {
-          showLayout.value = false
+          showLayout.value = false;
         } else {
-          showLayout.value = true
+          showLayout.value = true;
         }
       },
       {
-        immediate: true
+        immediate: true,
       }
-    )
+    );
 
     // watch(
     //   () => showLayout,
@@ -40,8 +40,8 @@ export default defineComponent({
     //   }
     // )
     return {
-      showLayout
-    }
-  }
-})
+      showLayout,
+    };
+  },
+});
 </script>

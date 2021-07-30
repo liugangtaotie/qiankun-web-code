@@ -8,7 +8,7 @@
     @close="close"
   >
     <div v-for="item in versions" style="display: flex; margin: 20px">
-      <div style="width: 150px">{{ item.key }}: </div>
+      <div style="width: 150px">{{ item.key }}:</div>
       <div style="width: 100px">{{ item.value }}</div>
     </div>
     <template #footer>
@@ -16,41 +16,42 @@
     </template>
   </el-dialog>
 </template>
+
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted } from "vue"
-import { getVersion } from "../services"
-import { isObjArr } from "../../../common/utils/utils"
+import { defineComponent, reactive, toRefs, onMounted } from "vue";
+import { getVersion } from "../services";
+import { isObjArr } from "../../../common/utils/utils";
 export default defineComponent({
   name: "Version",
   props: {
     versionDialogVisible: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   emits: ["cancel"],
   setup(props, context) {
     const state = reactive({
       visible: props.versionDialogVisible,
       closeOnClickModal: false,
-      versions: []
-    })
+      versions: [],
+    });
 
     onMounted(() => {
-      getVersionApi()
-    })
+      getVersionApi();
+    });
 
     const close = () => {
-      context.emit("cancel")
-    }
+      context.emit("cancel");
+    };
 
-    const getVersionApi = () => {}
+    const getVersionApi = () => {};
     return {
       ...toRefs(state),
-      close
-    }
-  }
-})
+      close,
+    };
+  },
+});
 </script>
 <style lang="scss" scoped>
 .form-row {

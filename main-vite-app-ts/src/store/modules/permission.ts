@@ -1,15 +1,9 @@
-import { createStore } from 'vuex'
+import { createStore } from "vuex";
 
-  const state = {
-  }
-  const getters = {
-  }
-  const mutations = {
-
-  }
-  const actions = {
-
-  }
+const state = {};
+const getters = {};
+const mutations = {};
+const actions = {};
 
 export default {
   namespaced: true,
@@ -17,4 +11,4 @@ export default {
   getters,
   mutations,
   actions,
-}
+};

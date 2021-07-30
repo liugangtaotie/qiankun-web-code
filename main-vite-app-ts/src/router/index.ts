@@ -1,21 +1,21 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router"
-import store from "@/store/index"
-import NProgress from "../utils/progress"
+import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
+import store from "@/store/index";
+import NProgress from "../utils/progress";
 
 // TODO 此处无法通过引用 import { useStore } from 'vuex'
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
-    redirect: "/home"
+    redirect: "/home",
   },
   {
     path: "/home",
     name: "Home",
     component: () => import(/* webpackChunkName: "home" */ "../views/Home.vue"),
     meta: {
-      title: "首页"
-    }
+      title: "首页",
+    },
   },
   {
     path: "/about",
@@ -23,8 +23,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "about" */ "../views/About.vue"),
     meta: {
       title: "关于",
-      main: true
-    }
+      main: true,
+    },
   },
   {
     path: "/login",
@@ -32,8 +32,8 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "login" */ "../views/login/login.vue"),
     meta: {
       title: "登录",
-      showLayout: false
-    }
+      showLayout: false,
+    },
   },
   {
     path: "/404",
@@ -41,17 +41,17 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import(/* webpackChunkName: "404" */ "../components/NotFound.vue"),
     meta: {
       title: "404",
-      main: true
-    }
+      main: true,
+    },
   },
   {
     path: "/button-list",
     name: "button-list",
     component: () => import(/* webpackChunkName: "buttonlist" */ "../views/button-list/index.vue"),
     meta: {
-      main: true // 是否为主应用的路由菜单
-    }
-  }
+      main: true, // 是否为主应用的路由菜单
+    },
+  },
   // ,
   // {
   //   // 找不到路由重定向到404页面
@@ -64,49 +64,49 @@ const routes: Array<RouteRecordRaw> = [
   //     savedPosition: false
   //   }
   // }
-]
+];
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes
-})
+  routes,
+});
 // const childrenPath = ['webpack-app', 'map-app', 'form-app', 'table-app']
 // 获取子模块路由前缀 判断是否为子路由
 const childrenPath = store.state.systemList.map((item: any) => {
-  return item.systemId
-})
-console.log(childrenPath, "childrenPath")
+  return item.systemId;
+});
+console.log(childrenPath, "childrenPath");
 
 router.beforeEach((to, _from, next) => {
-  NProgress.start()
+  NProgress.start();
 
-  console.log(store.state.systemList, "----useStore----")
+  console.log(store.state.systemList, "----useStore----");
   if (to.path === "/login" || to.path === "/init-password") {
-    next()
-    return false
+    next();
+    return false;
   }
   if (!localStorage.getItem("token")) {
-    next("/login")
-    return false
+    next("/login");
+    return false;
   }
   if (to.name) {
-    next()
-    return false
+    next();
+    return false;
   }
   if (childrenPath.some((item) => to.path.includes(item))) {
-    next()
-    console.log("child")
+    next();
+    console.log("child");
 
-    return false
+    return false;
   }
   // 如果找不到路由跳转到404
-  next("/404")
-  return false
-})
+  next("/404");
+  return false;
+});
 
 // 页面进入之后
 router.afterEach(() => {
-  NProgress.done()
-})
+  NProgress.done();
+});
 
-export default router
+export default router;

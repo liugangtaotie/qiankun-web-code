@@ -53,48 +53,48 @@
 </template>
 
 <script>
-import { getVerifyCode, login } from "../../services/index"
-import { getList } from "../../services/system"
-import md5 from "js-md5"
-import { encode, decode } from "js-base64"
-import { defineComponent, onBeforeMount, reactive, toRefs, ref } from "vue"
-import FindPassword from "./find-password.vue"
-import { warnMessage } from "../../utils/message"
-import { useStore } from "vuex"
+import { getVerifyCode, login } from "../../services/index";
+import { getList } from "../../services/system";
+import md5 from "js-md5";
+import { encode, decode } from "js-base64";
+import { defineComponent, onBeforeMount, reactive, toRefs, ref } from "vue";
+import FindPassword from "./find-password.vue";
+import { warnMessage } from "../../utils/message";
+import { useStore } from "vuex";
 export default defineComponent({
   name: "Login",
   components: {
-    FindPassword
+    FindPassword,
   },
   setup() {
-    let form = ref(null)
-    let store = useStore()
+    let form = ref(null);
+    let store = useStore();
     const validatePass = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入密码"))
+        callback(new Error("请输入密码"));
       } else {
         if (state.loginForm.account !== "") {
-          form.value.validateField("account")
+          form.value.validateField("account");
         }
-        callback()
+        callback();
       }
-    }
+    };
 
     const validateAccount = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入用户名"))
+        callback(new Error("请输入用户名"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
 
     const validatorVerCode = (rule, value, callback) => {
       if (value === "") {
-        callback(new Error("请输入验证码"))
+        callback(new Error("请输入验证码"));
       } else {
-        callback()
+        callback();
       }
-    }
+    };
 
     const state = reactive({
       projectName: "qiankun综合服务平台",
@@ -107,68 +107,68 @@ export default defineComponent({
         account: "admin",
         password: "123456",
         captchaValue: "oyta",
-        captchaId: ""
+        captchaId: "",
       },
       dialogVisible: false,
       rules: {
         password: [{ validator: validatePass, trigger: ["blur", "change"] }],
         account: [{ validator: validateAccount, trigger: ["blur", "change"] }],
-        captchaValue: [{ validator: validatorVerCode, trigger: ["blur", "change"] }]
-      }
-    })
+        captchaValue: [{ validator: validatorVerCode, trigger: ["blur", "change"] }],
+      },
+    });
 
     onBeforeMount(() => {
-      checkRemPass()
-      getImageVerifyCode()
-    })
+      checkRemPass();
+      getImageVerifyCode();
+    });
 
     // 判断是否已缓存账号密码
     const checkRemPass = () => {
-      const loginRemInfo = localStorage.getItem("loginRemInfo")
+      const loginRemInfo = localStorage.getItem("loginRemInfo");
       if (loginRemInfo) {
-        const jsonInof = JSON.parse(decode(loginRemInfo))
-        state.loginForm.account = jsonInof.account
-        state.loginForm.password = jsonInof.password
-        state.rememberPasCbox = true
+        const jsonInof = JSON.parse(decode(loginRemInfo));
+        state.loginForm.account = jsonInof.account;
+        state.loginForm.password = jsonInof.password;
+        state.rememberPasCbox = true;
       }
-    }
+    };
 
     // 判断是否需要记住账号密码
     const checkNeedRemPass = () => {
       if (state.rememberPasCbox) {
         const info = {
           account: state.loginForm.account,
-          password: state.loginForm.password
-        }
-        localStorage.setItem("loginRemInfo", encode(JSON.stringify(info)))
+          password: state.loginForm.password,
+        };
+        localStorage.setItem("loginRemInfo", encode(JSON.stringify(info)));
       } else {
-        localStorage.removeItem("loginRemInfo")
+        localStorage.removeItem("loginRemInfo");
       }
-    }
+    };
 
     const submitForm = () => {
       form.value.validate((valid) => {
         if (valid) {
-          checkNeedRemPass()
-          adminLogin()
+          checkNeedRemPass();
+          adminLogin();
         }
-      })
-    }
+      });
+    };
 
     // 获取验证码
     const getImageVerifyCode = async () => {
-      const res = await getVerifyCode()
+      const res = await getVerifyCode();
       if (res.code === 200) {
-        state.loginForm.captchaId = res.data.key
-        state.vcodeImg = res.data.b64s
+        state.loginForm.captchaId = res.data.key;
+        state.vcodeImg = res.data.b64s;
       }
-      console.log(res)
-    }
+      console.log(res);
+    };
 
     // 验证登录
     const adminLogin = async () => {
-      console.log(md5(state.loginForm.password).toLocaleLowerCase())
-      state.loading = true
+      console.log(md5(state.loginForm.password).toLocaleLowerCase());
+      state.loading = true;
 
       /* TODO 登录接口静态数据
       {
@@ -194,36 +194,38 @@ export default defineComponent({
         account: encode(state.loginForm.account),
         captchaValue: "0yta", //state.loginForm.captchaValue,
         password: md5(state.loginForm.password).toLocaleLowerCase(),
-        captchaId: state.loginForm.captchaId
-      })
-      state.loading = false
+        captchaId: state.loginForm.captchaId,
+      });
+      state.loading = false;
       if (res?.code === 200) {
-        let account = encode(state.loginForm.account)
-        let password = md5(state.loginForm.password).toLocaleLowerCase()
-        let result = res.data.find((item) => item.account === account && item.password === password)
+        let account = encode(state.loginForm.account);
+        let password = md5(state.loginForm.password).toLocaleLowerCase();
+        let result = res.data.find(
+          (item) => item.account === account && item.password === password
+        );
         if (result?.success === "200") {
           localStorage.setItem(
             "token",
             JSON.stringify({
               ...result,
-              account: state.loginForm.account
+              account: state.loginForm.account,
             })
-          )
+          );
           store.dispatch("fetchSystemList").then((res) => {
             // window.location.href = "/"
-            console.log("111111111111111111")
-          })
+            console.log("111111111111111111");
+          });
         } else {
-          warnMessage("用户名或密码输入有误，请重新输入")
+          warnMessage("用户名或密码输入有误，请重新输入");
         }
       } else {
-        getImageVerifyCode()
+        getImageVerifyCode();
       }
-    }
+    };
 
     const cancel = () => {
-      state.dialogVisible = false
-    }
+      state.dialogVisible = false;
+    };
 
     return {
       ...toRefs(state),
@@ -236,10 +238,10 @@ export default defineComponent({
       validatePass,
       validateAccount,
       cancel,
-      form
-    }
-  }
-})
+      form,
+    };
+  },
+});
 </script>
 
 

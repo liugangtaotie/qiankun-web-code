@@ -44,161 +44,161 @@
 </template>
 
 <script lang="ts">
-  import {
-    ref,
-    defineComponent,
-    PropType,
-    onBeforeMount,
-    getCurrentInstance,
-    watch,
-    nextTick
-  } from 'vue'
-  import { storageSession } from '../../utils/storage'
+import {
+  ref,
+  defineComponent,
+  PropType,
+  onBeforeMount,
+  getCurrentInstance,
+  watch,
+  nextTick,
+} from "vue";
+import { storageSession } from "../../utils/storage";
 
-  export interface ContextProps {
-    userName: string
-    passWord: string
-    verify: number | null
-    svg: any
-    telephone?: number
-    dynamicText?: string
-  }
+export interface ContextProps {
+  userName: string;
+  passWord: string;
+  verify: number | null;
+  svg: any;
+  telephone?: number;
+  dynamicText?: string;
+}
 
-  import { useRouter, useRoute } from 'vue-router'
+import { useRouter, useRoute } from "vue-router";
 
-  export default defineComponent({
-    name: 'Info',
-    props: {
-      ruleForm: {
-        type: Object as PropType<ContextProps>,
-        require: true
-      }
+export default defineComponent({
+  name: "Info",
+  props: {
+    ruleForm: {
+      type: Object as PropType<ContextProps>,
+      require: true,
     },
-    emits: ['onBehavior', 'refreshVerify'],
-    setup(props, ctx) {
-      let vm: any
+  },
+  emits: ["onBehavior", "refreshVerify"],
+  setup(props, ctx) {
+    let vm: any;
 
-      let tips = ref('注册')
-      let tipsFalse = ref('登录')
+    let tips = ref("注册");
+    let tipsFalse = ref("登录");
 
-      const route = useRoute()
-      const router = useRouter()
+    const route = useRoute();
+    const router = useRouter();
 
-      watch(
-        route,
-        async ({ path }, prevRoute: unknown): Promise<void> => {
-          await nextTick()
-          path.includes('register')
-            ? (tips.value = '登录') && (tipsFalse.value = '注册')
-            : (tips.value = '注册') && (tipsFalse.value = '登录')
-        },
-        { immediate: true }
-      )
+    watch(
+      route,
+      async ({ path }, prevRoute: unknown): Promise<void> => {
+        await nextTick();
+        path.includes("register")
+          ? (tips.value = "登录") && (tipsFalse.value = "注册")
+          : (tips.value = "注册") && (tipsFalse.value = "登录");
+      },
+      { immediate: true }
+    );
 
-      const rules: Object = ref({
-        userName: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        passWord: [
-          { required: true, message: '请输入密码', trigger: 'blur' },
-          { min: 6, message: '密码长度必须不小于6位', trigger: 'blur' }
-        ],
-        verify: [
-          { required: true, message: '请输入验证码', trigger: 'blur' },
-          { type: 'number', message: '验证码必须是数字类型', trigger: 'blur' }
-        ]
-      })
+    const rules: Object = ref({
+      userName: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+      passWord: [
+        { required: true, message: "请输入密码", trigger: "blur" },
+        { min: 6, message: "密码长度必须不小于6位", trigger: "blur" },
+      ],
+      verify: [
+        { required: true, message: "请输入验证码", trigger: "blur" },
+        { type: "number", message: "验证码必须是数字类型", trigger: "blur" },
+      ],
+    });
 
-      // 点击登录或注册
-      const onBehavior = (evt: Object): void => {
-        vm.refs.ruleForm.validate((valid: Boolean) => {
-          if (valid) {
-            ctx.emit('onBehavior', evt)
-          } else {
-            return false
-          }
-        })
-      }
+    // 点击登录或注册
+    const onBehavior = (evt: Object): void => {
+      vm.refs.ruleForm.validate((valid: Boolean) => {
+        if (valid) {
+          ctx.emit("onBehavior", evt);
+        } else {
+          return false;
+        }
+      });
+    };
 
-      // 刷新验证码
-      const refreshVerify = (): void => {
-        ctx.emit('refreshVerify')
-      }
+    // 刷新验证码
+    const refreshVerify = (): void => {
+      ctx.emit("refreshVerify");
+    };
 
-      // 表单重置
-      const resetForm = (): void => {
-        vm.refs.ruleForm.resetFields()
-      }
+    // 表单重置
+    const resetForm = (): void => {
+      vm.refs.ruleForm.resetFields();
+    };
 
-      // 登录、注册页面切换
-      const changPage = (): void => {
-        tips.value === '注册' ? router.push('/register') : router.push('/login')
-      }
+    // 登录、注册页面切换
+    const changPage = (): void => {
+      tips.value === "注册" ? router.push("/register") : router.push("/login");
+    };
 
-      const noSecret = (): void => {
-        storageSession.setItem('info', {
-          username: '测试用户',
-          accessToken: 'eyJhbGciOiJIUzUxMiJ9.test'
-        })
-        router.push('/')
-      }
+    const noSecret = (): void => {
+      storageSession.setItem("info", {
+        username: "测试用户",
+        accessToken: "eyJhbGciOiJIUzUxMiJ9.test",
+      });
+      router.push("/");
+    };
 
-      onBeforeMount(() => {
-        vm = getCurrentInstance() //获取组件实例
-      })
+    onBeforeMount(() => {
+      vm = getCurrentInstance(); //获取组件实例
+    });
 
-      return {
-        rules,
-        tips,
-        tipsFalse,
-        resetForm,
-        onBehavior,
-        refreshVerify,
-        changPage,
-        noSecret
-      }
-    }
-  })
+    return {
+      rules,
+      tips,
+      tipsFalse,
+      resetForm,
+      onBehavior,
+      refreshVerify,
+      changPage,
+      noSecret,
+    };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
-  .info {
-    width: 30vw;
-    height: 48vh;
-    background: url('../../assets/login.png') no-repeat center;
-    background-size: cover;
-    position: absolute;
-    border-radius: 20px;
-    right: 100px;
-    top: 30vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    @media screen and (max-width: 750px) {
-      width: 88vw;
-      right: 25px;
-      top: 22vh;
-    }
-    .rule-form {
-      width: 80%;
-      .verify {
-        position: absolute;
-        margin: -10px 0 0 -120px;
-        &:hover {
-          cursor: pointer;
-        }
-      }
-      .tips {
-        color: #409eff;
-        float: right;
-        &:hover {
-          cursor: pointer;
-        }
+.info {
+  width: 30vw;
+  height: 48vh;
+  background: url("../../assets/login.png") no-repeat center;
+  background-size: cover;
+  position: absolute;
+  border-radius: 20px;
+  right: 100px;
+  top: 30vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media screen and (max-width: 750px) {
+    width: 88vw;
+    right: 25px;
+    top: 22vh;
+  }
+  .rule-form {
+    width: 80%;
+    .verify {
+      position: absolute;
+      margin: -10px 0 0 -120px;
+      &:hover {
+        cursor: pointer;
       }
     }
-    .secret {
+    .tips {
       color: #409eff;
+      float: right;
       &:hover {
         cursor: pointer;
       }
     }
   }
+  .secret {
+    color: #409eff;
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
 </style>
