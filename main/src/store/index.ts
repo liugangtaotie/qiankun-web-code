@@ -2,7 +2,6 @@ import { createStore } from "vuex";
 import { getMenuList } from "./data.d";
 import createPersistedState from "vuex-persistedstate";
 import { SystemMenu, SystemInfo } from "../../types/models";
-import { getSystemList } from "../services/index";
 
 interface AppState {
   menuList: SystemMenu[];
@@ -77,12 +76,6 @@ export default createStore({
           "code": 200
         }
         */
-        const res: any = await getSystemList();
-
-        if (res?.code === 200) {
-          commit("setSystemList", res.data);
-          window.location.href = "/";
-        }
       } catch (error) {
         console.log(error, "fetchSystemList-error");
       }

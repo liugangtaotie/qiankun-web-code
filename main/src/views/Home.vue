@@ -57,9 +57,9 @@
       </div>
       <!-- 详情 -->
     </div>
-    <UpdatePassword v-model="updateDialogVisible" @cancel="close" />
   </div>
 </template>
+
 <script lang="ts">
 import { defineComponent, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -68,8 +68,6 @@ import "swiper/components/pagination/pagination.min.css";
 import "swiper/components/navigation/navigation.min.css";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import { logout } from "../services";
-import UpdatePassword from "../components/update-password.vue";
 import SwiperCore, { Pagination, Navigation } from "swiper/core";
 import { registerMicroApps, start } from "qiankun";
 import { getActiveRule } from "../../../common/utils/ts/utils";
@@ -80,7 +78,6 @@ export default defineComponent({
   components: {
     Swiper,
     SwiperSlide,
-    UpdatePassword,
   },
   setup() {
     const { proxy } = getCurrentInstance();
@@ -234,13 +231,7 @@ function useEchartsSetting(proxy: any, router: any) {
         cancelButtonText: "取消",
         type: "warning",
       })
-      .then(() => {
-        logout().then((res: any) => {
-          console.log("登出成功", res);
-          localStorage.clear();
-          router.push("/login");
-        });
-      })
+      .then(() => {})
       .catch(() => {
         return false;
       });
