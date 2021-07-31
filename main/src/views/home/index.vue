@@ -22,6 +22,8 @@
       >dec -</van-button
     >
 
+    <van-divider />
+
     <van-grid class="flex flex_around" :gutter="10" :column-num="3">
       <van-grid-item
         v-for="(item, index) in modeuleList"
