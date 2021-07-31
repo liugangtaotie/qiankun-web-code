@@ -3,21 +3,19 @@
     <!-- 内容 -->
     <div class="content">
       <!-- 子系统模块 -->
-      <div class="system" v-if="showHome">
-        <swiper class="mySwiper" :slidesPerView="5" :navigation="true">
-          <swiper-slide v-for="(item, index) in modeuleList" :key="index">
-            <div
-              @click="jumpChildSystem(item)"
-              class="module-system"
-              :class="item.systemId == activeModule ? 'active-module' : ''"
-              @mouseover="activeModule = item.systemId"
-              @mouseleave="activeModule = ''"
-            >
-              <img :src="item.systemId == activeModule ? item.selected : item.normal" />
-              <div class="module-title">{{ item.title }}</div>
-            </div>
-          </swiper-slide>
-        </swiper>
+      <div class="system">
+        <div v-for="(item, index) in modeuleList" :key="index">
+          <div
+            @click="jumpChildSystem(item)"
+            class="module-system"
+            :class="item.systemId == activeModule ? 'active-module' : ''"
+            @mouseover="activeModule = item.systemId"
+            @mouseleave="activeModule = ''"
+          >
+            <img :src="item.systemId == activeModule ? item.selected : item.normal" />
+            <div class="module-title">{{ item.title }}</div>
+          </div>
+        </div>
       </div>
       <!-- 详情 -->
     </div>
@@ -26,23 +24,12 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import "swiper/swiper.scss";
-import "swiper/components/pagination/pagination.min.css";
-import "swiper/components/navigation/navigation.min.css";
 import { useRouter } from "vue-router";
 import { useStore } from "vuex";
-import SwiperCore, { Pagination, Navigation } from "swiper/core";
 import { registerMicroApps, start } from "qiankun";
 import { getActiveRule } from "../../../common/utils/ts/utils";
 
-// install Swiper modules
-SwiperCore.use([Pagination, Navigation]);
 export default defineComponent({
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
   setup() {
     const { proxy } = getCurrentInstance();
     const router = useRouter();
@@ -91,9 +78,6 @@ export default defineComponent({
       chartsData10: [], // 乡村治理居民参与情况 年龄段
     });
 
-    // 获取下拉框数据
-    const getTreeData = async () => {};
-
     // 模块列表
     const { modeuleList, jumpChildSystem } = useModuleSetting(router, store, proxy);
 
@@ -108,9 +92,6 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      getTreeData();
-      getNews();
-
       const array = [
         {
           container: "#mainwrapper",
@@ -140,9 +121,6 @@ export default defineComponent({
       });
     });
 
-    // 获取顶部的消息滚动
-    const getNews = async () => {};
-
     // // 查看详情
     const goInfo = () => {
       state.showHome = false;
@@ -153,17 +131,12 @@ export default defineComponent({
       state.updateDialogVisible = false;
     };
 
-    // echarts 统计报表
-    const { logoutClick } = useEchartsSetting(proxy, router);
-
     return {
       ...toRefs(state),
-      logoutClick,
       modeuleList,
       jumpChildSystem,
       updatePasswordClick,
       goInfo,
-      getTreeData,
       getChartData,
       close,
     };
@@ -186,25 +159,8 @@ function useModuleSetting(router: any, store: any, proxy: any) {
     jumpChildSystem,
   };
 }
-
-function useEchartsSetting(proxy: any, router: any) {
-  const logoutClick = () => {
-    proxy
-      .$confirm("请问是否退出登录?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
-      })
-      .then(() => {})
-      .catch(() => {
-        return false;
-      });
-  };
-  return {
-    logoutClick,
-  };
-}
 </script>
+
 <style lang="scss" scoped>
 .main {
   display: flex;

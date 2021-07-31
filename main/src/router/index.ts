@@ -18,15 +18,6 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import(/* webpackChunkName: "about" */ "../views/About.vue"),
-    meta: {
-      title: "关于",
-      main: true,
-    },
-  },
-  {
     path: "/404",
     name: "404",
     component: () => import(/* webpackChunkName: "404" */ "../components/NotFound.vue"),
