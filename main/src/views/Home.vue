@@ -6,7 +6,7 @@
       <div class="system">
         <div v-for="(item, index) in modeuleList" :key="index">
           <div
-            @click="jumpChildSystem(item)"
+            @click="$router.push(item.path)"
             class="module-system"
             :class="item.systemId == activeModule ? 'active-module' : ''"
             @mouseover="activeModule = item.systemId"
@@ -25,7 +25,6 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 import { registerMicroApps, start } from "qiankun";
 import { getActiveRule } from "../../../common/utils/ts/utils";
 
@@ -33,63 +32,35 @@ export default defineComponent({
   setup() {
     const { proxy } = getCurrentInstance();
     const router = useRouter();
-    const store = useStore();
     const state = reactive({
-      showHome: true,
-      updateDialogVisible: false,
       avator: "images/home/icon-avator.png",
-      nickName: JSON.parse(localStorage.getItem("token") || "{}").nickName, // 账户名称
-      newList: [], // 顶部消息列表
-      swiperCenterImage: "images/home/swiper-title.png",
-      closeImage: "images/home/close.png",
-      swiperImageList: [
-        // 轮播图片列表
-        "images/home/banner-01.png",
-        // "images/home/banner-02.png",
-        // "images/home/banner-03.png"
-      ],
-      introduceList: [
-        // 轮播图片列表
-        "images/home/introduce-01.png",
-      ],
-      headerSetting: {
-        // 顶部导航
-        logoUrl: "images/home/icon_logo.png",
-        hornUrl: "images/home/icon_horn.png",
-      },
       activeModule: "", // 系统模块
-      treeData: {},
-      area: "", // 区域
-      areaOptions: [], // 区域数据
-      town: "", // 镇
-      townOptions: [], // 镇数据
-      village: "", // 村
-      villageOptions: [], // 村数据
-      echartsNum: 0,
-      chartsData1: [], // 人口概况 男女比例
-      chartsData2: [], // 人口概况 人口类型
-      chartsData3: [], // 农村居民平均年收入
-      chartsData4: [], // 乡村治理荣誉
-      chartsData5: [], // 随手拍事件分类统计
-      chartsData6: [], // 随手拍办理情况统计
-      chartsData7: [], // 外出务工情况
-      chartsData8: [], // 农作物占耕地统计
-      chartsData9: [], // 乡村治理居民参与情况 男女
-      chartsData10: [], // 乡村治理居民参与情况 年龄段
+
+      modeuleList: [
+        {
+          developmentEntry: "//localhost:4000/",
+          enabled: true,
+          name: "webpack-app",
+          normal: "images/module/dvs-farm-normal.png",
+          path: "/webpack-app/about",
+          productionEntry: "/child/webpack-app/",
+          selected: "images/module/dvs-farm-selected.png",
+          systemId: "webpack-app",
+          title: "webpack-app",
+        },
+        {
+          developmentEntry: "//localhost:5000/",
+          enabled: true,
+          name: "map-app",
+          normal: "images/module/dvs-village-normal.png",
+          path: "/map-app/about",
+          productionEntry: "/child/map-app/",
+          selected: "images/module/dvs-village-selected.png",
+          systemId: "map-app",
+          title: "map-app",
+        },
+      ],
     });
-
-    // 模块列表
-    const { modeuleList, jumpChildSystem } = useModuleSetting(router, store, proxy);
-
-    const updatePasswordClick = () => {
-      // console.log('updatePassword')
-      state.updateDialogVisible = true;
-    };
-
-    // 获取echart数据
-    const getChartData = () => {
-      state.echartsNum++;
-    };
 
     onMounted(() => {
       const array = [
@@ -121,44 +92,11 @@ export default defineComponent({
       });
     });
 
-    // // 查看详情
-    const goInfo = () => {
-      state.showHome = false;
-      window.scroll(0, 0);
-    };
-
-    const close = () => {
-      state.updateDialogVisible = false;
-    };
-
     return {
       ...toRefs(state),
-      modeuleList,
-      jumpChildSystem,
-      updatePasswordClick,
-      goInfo,
-      getChartData,
-      close,
     };
   },
 });
-
-function useModuleSetting(router: any, store: any, proxy: any) {
-  const modeuleList = reactive(store.state.systemList);
-  const jumpChildSystem = (child: any) => {
-    // console.log(child, 'jumpChildSystem')
-    store.commit("changeSystem", child.systemId);
-    if (child.path) {
-      router.push(child.path);
-    } else {
-      proxy.$alert("请联系管理员，配置相关子系统！");
-    }
-  };
-  return {
-    modeuleList,
-    jumpChildSystem,
-  };
-}
 </script>
 
 <style lang="scss" scoped>
