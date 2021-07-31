@@ -1,43 +1,7 @@
 <template>
   <div class="main">
-    <!-- 顶部 -->
-    <div class="header">
-      <div class="header-left">
-        <img :src="headerSetting.logoUrl" />
-        <div class="left-title">qiankun综合服务平台</div>
-      </div>
-      <div class="right-notice">
-        <img :src="headerSetting.hornUrl" class="new-img" />
-        <div class="new-con">
-          <el-carousel
-            height="36px"
-            direction="vertical"
-            :autoplay="true"
-            indicator-position="none"
-          >
-            <el-carousel-item
-              v-for="item in newList"
-              :key="item"
-              class="carousel-class"
-              @click="goNewinfo(item.id)"
-            >
-              <div class="top-title">{{ item.title }}</div>
-              <div>{{ item.createdAt.split(" ")[0] }}</div>
-            </el-carousel-item>
-          </el-carousel>
-        </div>
-      </div>
-    </div>
     <!-- 内容 -->
     <div class="content">
-      <div class="con-top">
-        <!-- indicator-position="outside" -->
-        <el-carousel height="420px">
-          <el-carousel-item v-for="item in swiperImageList" :key="item">
-            <img :src="item" class="con-top-img" />
-          </el-carousel-item>
-        </el-carousel>
-      </div>
       <!-- 子系统模块 -->
       <div class="system" v-if="showHome">
         <swiper class="mySwiper" :slidesPerView="5" :navigation="true">
