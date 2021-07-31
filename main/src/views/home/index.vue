@@ -55,37 +55,15 @@ export default class Home extends Vue {
 
   modeuleList = [
     {
-      developmentEntry: "//localhost:4000/",
+      developmentEntry: "//localhost:7000/",
       enabled: true,
-      name: "webpack-app",
-      normal: "images/module/dvs-farm-normal.png",
-      path: "/webpack-app/about",
-      productionEntry: "/child/webpack-app/",
-      selected: "images/module/dvs-farm-selected.png",
-      systemId: "webpack-app",
-      title: "webpack-app",
-    },
-    {
-      developmentEntry: "//localhost:5000/",
-      enabled: true,
-      name: "map-app",
+      name: "main-first",
       normal: "images/module/dvs-village-normal.png",
-      path: "/map-app/about",
-      productionEntry: "/child/map-app/",
+      path: "/main-first",
+      productionEntry: "/child/main-first/",
       selected: "images/module/dvs-village-selected.png",
-      systemId: "map-app",
-      title: "map-app",
-    },
-    {
-      developmentEntry: "//localhost:6000/",
-      enabled: true,
-      name: "sub-first",
-      normal: "images/module/dvs-village-normal.png",
-      path: "/sub-first",
-      productionEntry: "/child/sub-first/",
-      selected: "images/module/dvs-village-selected.png",
-      systemId: "sub-first",
-      title: "sub-first",
+      systemId: "main-first",
+      title: "main-first",
     },
   ];
 
@@ -99,21 +77,9 @@ export default class Home extends Vue {
     const array = [
       {
         container: "#mainwrapper",
-        entry: "//localhost:4000/",
-        name: "webpack-app",
-        activeRule: this.getActiveRule("#/webpack-app"),
-      },
-      {
-        container: "#mainwrapper",
-        entry: "//localhost:5000/",
-        name: "map-app",
-        activeRule: this.getActiveRule("#/map-app"),
-      },
-      {
-        container: "#mainwrapper",
-        entry: "//localhost:6000/",
-        name: "sub-first",
-        activeRule: this.getActiveRule("#/sub-first"),
+        entry: "//localhost:7000/",
+        name: "main-first",
+        activeRule: this.getActiveRule("#/main-first"),
       },
     ];
 
