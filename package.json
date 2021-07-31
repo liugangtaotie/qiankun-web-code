@@ -13,6 +13,7 @@
     "install:sub-first": "cd sub-first && npm i",
     "start": "npm-run-all --parallel start:*",
     "start:sub-first": "cd sub-first && npm start",
+    "start:sub-second": "cd sub-second && npm start",
     "start:main": "cd main && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

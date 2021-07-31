@@ -65,6 +65,17 @@ export default class Home extends Vue {
       systemId: "sub-first",
       title: "sub-first",
     },
+    {
+      developmentEntry: "//localhost:5000/",
+      enabled: true,
+      name: "sub-second",
+      normal: "images/module/dvs-village-normal.png",
+      path: "/sub-second",
+      productionEntry: "/child/sub-second/",
+      selected: "images/module/dvs-village-selected.png",
+      systemId: "sub-second",
+      title: "sub-second",
+    },
   ];
 
   created() {}
@@ -80,6 +91,12 @@ export default class Home extends Vue {
         entry: "//localhost:7000/",
         name: "sub-first",
         activeRule: this.getActiveRule("#/sub-first"),
+      },
+      {
+        container: "#mainwrapper",
+        entry: "//localhost:5000/",
+        name: "sub-second",
+        activeRule: this.getActiveRule("#/sub-second"),
       },
     ];
 
