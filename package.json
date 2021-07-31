@@ -12,11 +12,9 @@
     "install:main-vite-app-ts": "cd main-vite-app-ts && npm i",
     "install:map-app": "cd map-app && npm i",
     "install:webpack-app": "cd webpack-app && npm i",
-    "install:webpack-app-ts": "cd webpack-app-ts && npm i",
     "start": "npm-run-all --parallel start:*",
     "start:map-app": "cd map-app && npm start",
     "start:webpack-app": "cd webpack-app && npm start",
-    "start:webpack-app-ts": "cd webpack-app-ts && npm start",
     "start:main-vite-app-ts": "cd main-vite-app-ts && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
