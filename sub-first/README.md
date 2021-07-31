@@ -1,4 +1,4 @@
-# main-first
+# sub-first
 
 ## Project setup
 ```

@@ -4,7 +4,7 @@ const packageName = require("./package.json").name;
 
 module.exports = {
   publicPath: "./",
-  outputDir: "../../qiankun/main/child/main-first",
+  outputDir: "../../qiankun/main/child/sub-first",
   transpileDependencies: ["common"],
   configureWebpack: {
     output: {

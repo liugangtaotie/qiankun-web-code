@@ -57,13 +57,13 @@ export default class Home extends Vue {
     {
       developmentEntry: "//localhost:7000/",
       enabled: true,
-      name: "main-first",
+      name: "sub-first",
       normal: "images/module/dvs-village-normal.png",
-      path: "/main-first",
-      productionEntry: "/child/main-first/",
+      path: "/sub-first",
+      productionEntry: "/child/sub-first/",
       selected: "images/module/dvs-village-selected.png",
-      systemId: "main-first",
-      title: "main-first",
+      systemId: "sub-first",
+      title: "sub-first",
     },
   ];
 
@@ -78,8 +78,8 @@ export default class Home extends Vue {
       {
         container: "#mainwrapper",
         entry: "//localhost:7000/",
-        name: "main-first",
-        activeRule: this.getActiveRule("#/main-first"),
+        name: "sub-first",
+        activeRule: this.getActiveRule("#/sub-first"),
       },
     ];
 
