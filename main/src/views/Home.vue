@@ -71,6 +71,9 @@ import { useStore } from "vuex";
 import { logout } from "../services";
 import UpdatePassword from "../components/update-password.vue";
 import SwiperCore, { Pagination, Navigation } from "swiper/core";
+import { registerMicroApps, start } from "qiankun";
+import { getActiveRule } from "../../../common/utils/ts/utils";
+
 // install Swiper modules
 SwiperCore.use([Pagination, Navigation]);
 export default defineComponent({
@@ -126,34 +129,72 @@ export default defineComponent({
       chartsData9: [], // 乡村治理居民参与情况 男女
       chartsData10: [], // 乡村治理居民参与情况 年龄段
     });
+
     // 获取下拉框数据
     const getTreeData = async () => {};
+
     // 模块列表
     const { modeuleList, jumpChildSystem } = useModuleSetting(router, store, proxy);
+
     const updatePasswordClick = () => {
       // console.log('updatePassword')
       state.updateDialogVisible = true;
     };
+
     // 获取echart数据
     const getChartData = () => {
       state.echartsNum++;
     };
+
     onMounted(() => {
       getTreeData();
       getNews();
+
+      const array = [
+        {
+          container: "#mainwrapper",
+          entry: "//localhost:4000/",
+          name: "webpack-app",
+          activeRule: getActiveRule("#/webpack-app"),
+        },
+        {
+          container: "#mainwrapper",
+          entry: "//localhost:5000/",
+          name: "map-app",
+          activeRule: getActiveRule("#/map-app"),
+        },
+      ];
+
+      console.log("start loading");
+      // TODO  在主应用中注册微应用
+      registerMicroApps([...array]);
+
+      // TODO 启动微应用
+      start({
+        prefetch: "all",
+        sandbox: {
+          // strictStyleIsolation: true,
+          experimentalStyleIsolation: true,
+        },
+      });
     });
+
     // 获取顶部的消息滚动
     const getNews = async () => {};
+
     // // 查看详情
     const goInfo = () => {
       state.showHome = false;
       window.scroll(0, 0);
     };
+
     const close = () => {
       state.updateDialogVisible = false;
     };
+
     // echarts 统计报表
     const { logoutClick } = useEchartsSetting(proxy, router);
+
     return {
       ...toRefs(state),
       logoutClick,

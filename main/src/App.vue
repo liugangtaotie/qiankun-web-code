@@ -1,7 +1,8 @@
 <template>
-  <!---登录和主页等没有layout--->
-  <router-view v-if="!showLayout" />
-  <layout v-show="showLayout" />
+  <div>
+    <router-view />
+    <div id="mainwrapper"></div>
+  </div>
 </template>
 <script lang="ts">
 import { defineComponent, watch, defineAsyncComponent, ref } from "vue";

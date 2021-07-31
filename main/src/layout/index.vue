@@ -39,31 +39,31 @@ export default defineComponent({
     });
 
     onMounted(() => {
-      console.log(store.state.systemList, "ssss");
-
-      let array: any = store.state.systemList
-        .filter((item: any) => item.enabled === true)
-        .map((item: any) => {
-          return {
-            name: item.name,
-            entry:
-              process.env.NODE_ENV === "production" ? item.productionEntry : item.developmentEntry,
-            container: "#mainwrapper",
-            activeRule: getActiveRule(`#/${item.name}`),
-          };
-        });
-      console.log("start loading");
-      // TODO  在主应用中注册微应用
-      registerMicroApps([...array]);
-
-      // TODO 启动微应用
-      start({
-        prefetch: "all",
-        sandbox: {
-          // strictStyleIsolation: true,
-          experimentalStyleIsolation: true,
-        },
-      });
+      // const array = [
+      //   {
+      //     container: "#mainwrapper",
+      //     entry: "//localhost:4000/",
+      //     name: "webpack-app",
+      //     activeRule: getActiveRule("#/webpack-app"),
+      //   },
+      //   {
+      //     container: "#mainwrapper",
+      //     entry: "//localhost:5000/",
+      //     name: "map-app",
+      //     activeRule: getActiveRule("#/map-app"),
+      //   },
+      // ];
+      // console.log("start loading");
+      // // TODO  在主应用中注册微应用
+      // registerMicroApps([...array]);
+      // // TODO 启动微应用
+      // start({
+      //   prefetch: "all",
+      //   sandbox: {
+      //     // strictStyleIsolation: true,
+      //     experimentalStyleIsolation: true,
+      //   },
+      // });
     });
 
     // 监测路由判断是主应用路由还是子应用路由

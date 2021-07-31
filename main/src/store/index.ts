@@ -81,7 +81,7 @@ export default createStore({
 
         if (res?.code === 200) {
           commit("setSystemList", res.data);
-          // window.location.href = "/";
+          window.location.href = "/";
         }
       } catch (error) {
         console.log(error, "fetchSystemList-error");
