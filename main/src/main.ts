@@ -42,9 +42,12 @@ import {
   Field,
   Col,
   Row,
+
   RadioGroup, Radio,
   Checkbox,
   CheckboxGroup,
+  Grid,
+  GridItem,
   Toast,
   Tab,
   Tabs,
@@ -105,6 +108,8 @@ Vue.use(Divider);
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
 Vue.use(ActionSheet);
+Vue.use(Grid);
+Vue.use(GridItem);
 Vue.use(Search);
 Vue.use(IndexBar);
 Vue.use(IndexAnchor);

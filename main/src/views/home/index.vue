@@ -22,20 +22,15 @@
       >dec -</van-button
     >
 
-    <div class="system">
-      <div v-for="(item, index) in modeuleList" :key="index">
-        <div
-          @click="$router.push(item.path)"
-          class="module-system"
-          :class="item.systemId == activeModule ? 'active-module' : ''"
-          @mouseover="activeModule = item.systemId"
-          @mouseleave="activeModule = ''"
-        >
-          <img :src="item.systemId == activeModule ? item.selected : item.normal" />
-          <div class="module-title">{{ item.title }}</div>
-        </div>
-      </div>
-    </div>
+    <van-grid class="flex flex_around" :gutter="10" :column-num="3">
+      <van-grid-item
+        v-for="(item, index) in modeuleList"
+        :key="index"
+        icon="photo-o"
+        :text="item.title"
+        @click="$router.push(item.path)"
+      />
+    </van-grid>
 
     <my-footer :active="0"></my-footer>
   </div>
@@ -79,6 +74,17 @@ export default class Home extends Vue {
       systemId: "map-app",
       title: "map-app",
     },
+    {
+      developmentEntry: "//localhost:6000/",
+      enabled: true,
+      name: "sub-first",
+      normal: "images/module/dvs-village-normal.png",
+      path: "/sub-first",
+      productionEntry: "/child/sub-first/",
+      selected: "images/module/dvs-village-selected.png",
+      systemId: "sub-first",
+      title: "sub-first",
+    },
   ];
 
   created() {}
@@ -100,6 +106,12 @@ export default class Home extends Vue {
         entry: "//localhost:5000/",
         name: "map-app",
         activeRule: this.getActiveRule("#/map-app"),
+      },
+      {
+        container: "#mainwrapper",
+        entry: "//localhost:6000/",
+        name: "sub-first",
+        activeRule: this.getActiveRule("#/sub-first"),
       },
     ];
 
