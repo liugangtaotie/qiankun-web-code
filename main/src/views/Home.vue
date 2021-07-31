@@ -23,15 +23,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, getCurrentInstance, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import { defineComponent, reactive, toRefs, onMounted } from "vue";
 import { registerMicroApps, start } from "qiankun";
 import { getActiveRule } from "../../../common/utils/ts/utils";
 
 export default defineComponent({
   setup() {
-    const { proxy } = getCurrentInstance();
-    const router = useRouter();
     const state = reactive({
       avator: "images/home/icon-avator.png",
       activeModule: "", // 系统模块
