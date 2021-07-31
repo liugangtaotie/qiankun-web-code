@@ -11,6 +11,7 @@
     "install": "npm-run-all --serial install:*",
     "install:main": "cd main && npm i",
     "install:sub-first": "cd sub-first && npm i",
+    "install:sub-second": "cd sub-second && npm i",
     "start": "npm-run-all --parallel start:*",
     "start:sub-first": "cd sub-first && npm start",
     "start:sub-second": "cd sub-second && npm start",
