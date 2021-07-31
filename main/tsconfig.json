@@ -60,9 +60,6 @@
       "@STA/*": [
         "static/*"
       ],
-      "@UTIL/*": [
-        "src/utils/*"
-      ],
     },
     "lib": [
       "esnext",
