@@ -15,7 +15,7 @@
     "start": "npm-run-all --parallel start:*",
     "start:map-app": "cd map-app && npm start",
     "start:webpack-app": "cd webpack-app && npm start",
-    "start:main-vite-app-ts": "cd main-vite-app-ts && npm start",
+    "start:main": "cd main && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
